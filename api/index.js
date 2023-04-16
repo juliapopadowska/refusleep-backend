@@ -4,8 +4,23 @@ import mongoose from "mongoose";
 import authRoute from "./routes/auth.js";
 import usersRoute from "./routes/users.js";
 import apartmentsRoute from "./routes/apartments.js";
+import cors from "cors";
+import multer from "multer";
+import fs from "fs";
+import cookieParser from "cookie-parser";
 
 const app = express();
+
+app.use(
+  cors({
+    credentials: true,
+    origin: "http://localhost:3000/",
+  })
+);
+
+app.use(express.json());
+app.use("/uploads", express.static("uploads"));
+app.use(cookieParser());
 dotenv.config();
 
 const connect = async () => {
@@ -27,6 +42,21 @@ mongoose.connection.on("connected", () => {
 
 app.get("/", (req, res) => {
   res.send("hello");
+});
+
+const photosMiddleware = multer({ dest: "uploads/" });
+
+app.post("/upload", photosMiddleware.array("photos", 100), (req, res) => {
+  const uploadedFiles = [];
+  for (let i = 0; i < req.files.length; i++) {
+    const { path, originalname } = req.files[i];
+    const parts = originalname.split(".");
+    const ext = parts[parts.length - 1];
+    const newPath = path + "." + ext;
+    fs.renameSync(path, newPath);
+    uploadedFiles.push(newPath.replace("uploads/", ""));
+  }
+  res.json(uploadedFiles);
 });
 
 //middlewares
