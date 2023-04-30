@@ -56,6 +56,7 @@ router.put("/profile", (req, res) => {
       await user.save();
       res.json("ok");
     }
+    res.set("Access-Control-Allow-Origin", "https://refusleep.vercel.app");
   });
 });
 
