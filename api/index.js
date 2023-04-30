@@ -11,16 +11,10 @@ import cookieParser from "cookie-parser";
 
 const app = express();
 
-// app.use(
-//   cors({
-//     credentials: true,
-//     origin: "https://refusleep-frontend.vercel.app/",
-//   })
-// );
-
 app.use(
   cors({
-    origin: "*",
+    credentials: true,
+    origin: "https://refusleep-frontend.vercel.app",
   })
 );
 
