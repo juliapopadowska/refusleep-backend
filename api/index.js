@@ -13,8 +13,7 @@ const app = express();
 
 app.use(
   cors({
-    credentials: false,
-    origin: "https://refusleep-frontend.vercel.app",
+    origin: "*",
   })
 );
 
