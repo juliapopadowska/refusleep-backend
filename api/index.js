@@ -5,8 +5,8 @@ import authRoute from "./routes/auth.js";
 import usersRoute from "./routes/users.js";
 import apartmentsRoute from "./routes/apartments.js";
 import cors from "cors";
-import multer from "multer";
-import fs from "fs";
+// import multer from "multer";
+// import fs from "fs";
 import cookieParser from "cookie-parser";
 
 const app = express();
@@ -44,20 +44,20 @@ app.get("/", (req, res) => {
   res.send("hello");
 });
 
-const photosMiddleware = multer({ dest: "uploads/" });
+// const photosMiddleware = multer({ dest: "uploads/" });
 
-app.post("/upload", photosMiddleware.array("photos", 100), (req, res) => {
-  const uploadedFiles = [];
-  for (let i = 0; i < req.files.length; i++) {
-    const { path, originalname } = req.files[i];
-    const parts = originalname.split(".");
-    const ext = parts[parts.length - 1];
-    const newPath = path + "." + ext;
-    fs.renameSync(path, newPath);
-    uploadedFiles.push(newPath.replace("uploads/", ""));
-  }
-  res.json(uploadedFiles);
-});
+// app.post("/upload", photosMiddleware.array("photos", 100), (req, res) => {
+//   const uploadedFiles = [];
+//   for (let i = 0; i < req.files.length; i++) {
+//     const { path, originalname } = req.files[i];
+//     const parts = originalname.split(".");
+//     const ext = parts[parts.length - 1];
+//     const newPath = path + "." + ext;
+//     fs.renameSync(path, newPath);
+//     uploadedFiles.push(newPath.replace("uploads/", ""));
+//   }
+//   res.json(uploadedFiles);
+// });
 
 //middlewares
 
