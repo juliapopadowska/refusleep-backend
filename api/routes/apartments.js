@@ -19,7 +19,7 @@ router.post("/add", (req, res) => {
     type,
     polishDetails,
     englishDetails,
-    germanDetails,
+    frenchDetails,
     ukrainianDetails,
     phone,
     addedPhotos,
@@ -33,12 +33,48 @@ router.post("/add", (req, res) => {
       address,
       polishDetails,
       englishDetails,
-      germanDetails,
+      frenchDetails,
       ukrainianDetails,
       photos: addedPhotos,
       phoneNumber: phone,
     });
     res.json(place);
+  });
+});
+
+router.put("/add", (req, res) => {
+  mongoose.connect(process.env.MONGO);
+  const { token } = req.cookies;
+  const {
+    id,
+    cityName,
+    address,
+    type,
+    polishDetails,
+    englishDetails,
+    frenchDetails,
+    ukrainianDetails,
+    phone,
+    addedPhotos,
+  } = req.body;
+  jsonwebtoken.verify(token, jwtSecret, {}, async (err, userData) => {
+    if (err) throw err;
+    const place = await Place.findById(id);
+    if (userData.id === place.owner.toString()) {
+      place.set({
+        cityName,
+        address,
+        type,
+        polishDetails,
+        englishDetails,
+        frenchDetails,
+        ukrainianDetails,
+        phone,
+        photos: addedPhotos,
+      });
+      await place.save();
+      res.json("ok");
+    }
   });
 });
 

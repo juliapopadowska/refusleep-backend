@@ -7,7 +7,7 @@ const PlaceSchema = new Schema({
   address: String,
   polishDetails: String,
   englishDetails: String,
-  germanDetails: String,
+  frenchDetails: String,
   ukrainianDetails: String,
   photos: [String],
   phoneNumber: String,
