@@ -42,7 +42,7 @@ router.get("/user-places", (req, res) => {
 });
 
 router.put("/profile", (req, res) => {
-  res.set("Access-Control-Allow-Origin", "https://refusleep.vercel.app");
+  res.set("Access-Control-Allow-Origin", "http://refusleep.vercel.app");
   res.set("Access-Control-Allow-Credentials", "true");
   mongoose.connect(process.env.MONGO);
   const { token } = req.cookies;
