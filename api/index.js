@@ -14,7 +14,7 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    origin: "http://refusleep.vercel.app",
+    origin: ["https://refusleep.vercel.app", "http://localhost:3000"],
   })
 );
 

@@ -19,6 +19,11 @@ router.post("/user-by-id", async (req, res) => {
 });
 
 router.get("/profile", (req, res) => {
+  const origin = req.headers.Origin;
+  console.log(origin);
+  res.setHeader("Access-Control-Allow-Origin", origin);
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Vary", "Origin");
   mongoose.connect(process.env.MONGO);
   const { token } = req.cookies;
   if (token) {
@@ -42,15 +47,12 @@ router.get("/user-places", (req, res) => {
 });
 
 router.put("/profile", (req, res) => {
-  res.set("Access-Control-Allow-Origin", "http://refusleep.vercel.app");
-  res.set("Access-Control-Allow-Credentials", "true");
   mongoose.connect(process.env.MONGO);
   const { token } = req.cookies;
   const { id, name } = req.body;
   jsonwebtoken.verify(token, jwtSecret, {}, async (err, userData) => {
     if (err) throw err;
     const user = await User.findById(id);
-    console.log(name);
     if (userData.id === user.id) {
       user.set({
         name: name,
