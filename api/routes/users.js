@@ -21,7 +21,7 @@ router.post("/user-by-id", async (req, res) => {
 router.get("/profile", (req, res) => {
   const origin = req.headers.Origin;
   console.log(origin);
-  res.setHeader("Access-Control-Allow-Origin", origin);
+  res.setHeader("Access-Control-Allow-Origin", "https://refusleep.vercel.app");
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader("Vary", "Origin");
   mongoose.connect(process.env.MONGO);
